@@ -1,0 +1,31 @@
+27 August 2009
+-----------------------------------------------------------
+Configuring software for use with the Press Conference
+tomorrow.
+
+ - Under slackware-12.2 the hp3325 printer goes to
+   /dev/usb/lp0
+
+ - Make sure that /dev/usb/lp0 is mode 666.
+
+ - In hp3325filter.py the option outfile must be
+
+      outfile = '-sOutputFile=-'
+
+   instead of
+
+      outfile = '-sOutputFile=/dev/usb/lp0'
+
+ - Inside /etc/printcap the following configuration worked
+
+	HP3325|hp3325|HP:hp:\
+	     :sd=/var/spool/lpd/hp3325:\
+	     :if=/var/spool/lpd/hp3325/hp3325filter.py:\
+	     :lp=/dev/usb/lp0:\
+	     :sh:
+
+ - The new version of dvips needs the following command line
+   to produce the file output.ps from output.dvi
+
+   $ dvips -t letter -o output.ps output
+
